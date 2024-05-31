@@ -3,6 +3,6 @@ export interface User {
     nome: string
     cpf: string
     rg: string 
-    data_nasc: Date
+    data_nasc: string
     sexo: string
 }

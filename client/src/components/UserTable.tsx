@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import { User } from '../models/User'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import {Table, Button, Space, Modal, Form, Input, Select, DatePicker, message} from 'antd'
 import api from '../services/api'
 import type { TableProps } from 'antd';
@@ -13,7 +13,7 @@ const UserTable: React.FC = () => {
     
 
     const [form] = Form.useForm()
-
+    const navigate = useNavigate()
 
     useEffect(() => { 
         const fetchUsers = async () => {
@@ -42,7 +42,7 @@ const UserTable: React.FC = () => {
         })
     }
 
-    const handleFinishUpdate = async (values: any) => {
+    const handleFinishUpdate = async (values: User) => {
         if (!selectedUser) return
 
         try {
@@ -50,6 +50,7 @@ const UserTable: React.FC = () => {
             console.log(response.data)
             setUsers(users.map(user => (user.id === selectedUser.id ? response.data: user)))
             setModalVisible(false)
+            navigate('/')
             message.success("Usuário atualizado com sucesso")
         } catch (error) {
             console.error("Erro ao atualizar usuário:", error)
