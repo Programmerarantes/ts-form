@@ -10,6 +10,8 @@ const UserTable: React.FC = () => {
     const [users, setUsers] = useState<User[]>([])
     const [selectedUser, setSelectedUser] = useState<User | null>(null)
     const [modalVisible, setModalVisible] = useState<boolean>(false)
+    const [nameFilter, setNameFilter] = useState<string>('')
+    const [cpfFilter, setCpfFilter] = useState<string>('')
     
 
     const [form] = Form.useForm()
@@ -79,6 +81,10 @@ const UserTable: React.FC = () => {
             onCancel: () => setSelectedUser(null)
         })
     }
+
+    const filteredUsers = users.filter(user => user.nome.toLowerCase().includes(nameFilter.toLowerCase()) && 
+        user.cpf.includes(cpfFilter)
+    )
     const columns: TableProps<User>['columns'] = [
         {
             title: 'ID',
@@ -138,10 +144,22 @@ const UserTable: React.FC = () => {
 
     return (
         <>
+            <Space style={{ marginBottom: 16, display: 'flex', justifyContent: 'center', marginTop: 25}}>
+                <Input
+                    placeholder="Filtrar por nome"
+                    value={nameFilter}
+                    onChange={e => setNameFilter(e.target.value)}
+                />
+                <Input
+                    placeholder="Filtrar por cpf"
+                    value={cpfFilter}
+                    onChange={e => setCpfFilter(e.target.value)}
+                />
+            </Space>
             <Button type="primary">
                 <Link to='/create'>Novo Usuário</Link>
             </Button>
-            <Table dataSource={users} columns={columns}/>
+            <Table dataSource={filteredUsers} columns={columns}/>
             <Modal
                 title="Editar Usuário"
                 open={modalVisible}

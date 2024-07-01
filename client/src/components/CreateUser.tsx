@@ -3,6 +3,7 @@ import { Form, Input, Button, DatePicker, Select, message } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import api from '../services/api'
 import { User } from '../models/User'
+import moment from 'moment'
 
 const dateFormat = 'DD/MM/YYYY';
 
@@ -14,14 +15,16 @@ export const CreateUser: React.FC = () => {
 
   const onFinishCreate = async (values: User) => {
     try {
-      await api.post('http://localhost:4000/users', values, {
-        headers: {
-          "Content-Type": "application/json"
-        }
-      })
+      const formattedValues = {
+        ...values,
+        data_nasc: moment(values.data_nasc).format(dateFormat),
+      }
+      console.log(formattedValues)
+      await api.post('http://localhost:4000/users', formattedValues)
       form.resetFields()
       navigate('/')
       message.success("Usuário cadastrado com sucesso")
+      console.log(values)
     } catch (error) {
       console.log("Erro ao enviar dados", error)
       message.error("Erro ao cadastrar usuário")
