@@ -82,9 +82,15 @@ const UserTable: React.FC = () => {
         })
     }
 
-    const filteredUsers = users.filter(user => user.nome.toLowerCase().includes(nameFilter.toLowerCase()) && 
-        user.cpf.includes(cpfFilter)
-    )
+    const filteredUsers = users.filter(user => {
+    // Verifica se user.nome não é undefined ou null antes de chamar toLowerCase()
+    const nomeLowerCase = user.nome ? user.nome.toLowerCase() : '';
+
+    // Verifica se user.cpf não é undefined ou null antes de chamar includes()
+    const cpfIncludes = user.cpf ? user.cpf.includes(cpfFilter) : false;
+
+    return nomeLowerCase.includes(nameFilter.toLowerCase()) && cpfIncludes;
+});
     const columns: TableProps<User>['columns'] = [
         {
             title: 'ID',
