@@ -3,7 +3,7 @@ import { vi } from 'vitest';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 
-// Mock Axios
+
 const mock = new MockAdapter(axios);
 mock.onPost('http://localhost:4000/users').reply(201, {
   id: 1,
@@ -16,12 +16,12 @@ mock.onPost('http://localhost:4000/users').reply(201, {
 
 export { mock };
 
-// Mock useNavigate
+
 vi.mock('react-router-dom', () => ({
   useNavigate: () => vi.fn(),
 }));
 
-// Mock message from Ant Design
+
 vi.mock('antd', () => {
   const antd = jest.requireActual('antd');
   return {
@@ -39,8 +39,8 @@ Object.defineProperty(window, 'matchMedia', {
     matches: false,
     media: query,
     onchange: null,
-    addListener: vi.fn(), // deprecated
-    removeListener: vi.fn(), // deprecated
+    addListener: vi.fn(), 
+    removeListener: vi.fn(), 
     addEventListener: vi.fn(),
     removeEventListener: vi.fn(),
     dispatchEvent: vi.fn(),

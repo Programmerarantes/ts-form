@@ -7,7 +7,6 @@ import moment from 'moment'
 
 const dateFormat = 'DD/MM/YYYY';
 
-
 export const CreateUser: React.FC = () => {
   
   const [form] = Form.useForm()
@@ -68,6 +67,7 @@ export const CreateUser: React.FC = () => {
             message: "O nome deve ter no máximo 50 caracteres"
           }
         ]}
+        hasFeedback
       >
         <Input />
       </Form.Item>
@@ -83,13 +83,14 @@ export const CreateUser: React.FC = () => {
           },
           {
             pattern: /^\d{3}\.\d{3}\.\d{3}\-\d{2}$/,
-            message: 'Formato inválido de CPF. Use XXX.XXX.XXX-XX'
+            message: 'Formato inválido de CPF. Use 000.000.000-00'
           },
           {
             max: 14,
             message: 'O CPF deve ter no máximo 11 números'
           }
         ]}
+        hasFeedback
       >
         <Input />
       </Form.Item>
@@ -105,13 +106,14 @@ export const CreateUser: React.FC = () => {
           },
           {
             pattern: /^\d{2}\.\d{3}\.\d{3}\-\d{1}$/,
-            message: 'Formato inválido de RG. Use XX.XXX.XXX-X'
+            message: 'Formato inválido de RG. Use 00.000.000-0'
           },
           {
             max: 12,
             message: 'O RG deve ter no máximo 9 números'
           }
         ]}
+        hasFeedback
       >
         <Input />
       </Form.Item>

@@ -1,6 +1,6 @@
-import { render, screen, fireEvent } from '@testing-library/react'
+import { render, screen } from '@testing-library/react'
 import '@testing-library/jest-dom'
-import { describe, test, expect, Mock } from 'vitest'
+import { describe, test, expect} from 'vitest'
 import { BrowserRouter as Router } from 'react-router-dom'
 import { CreateUser } from './CreateUser'
 

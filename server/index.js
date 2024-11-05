@@ -24,5 +24,5 @@ app.delete('/users/:id', db.deleteUser)
 app.get("/count", db.countUsers);
 
 app.listen(port, () => {
-    console.log(`App running on: http://localhost:4000`)
+    console.log(`App running on: http://localhost:${port}`)
 })
