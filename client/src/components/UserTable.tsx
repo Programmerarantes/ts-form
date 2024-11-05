@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import { User } from '../models/User'
 import { Link, useNavigate } from 'react-router-dom'
-import { Table, Button, Space, Modal, Form, Input, Select, DatePicker, message } from 'antd'
+import { Table, Button, Space, Modal, Form, Input, Select, DatePicker, message} from 'antd'
 import api from '../services/api'
 import type { TableProps } from 'antd';
 import moment from 'moment';
@@ -12,12 +12,12 @@ const UserTable = () => {
     const [modalVisible, setModalVisible] = useState<boolean>(false)
     const [nameFilter, setNameFilter] = useState<string>('')
     const [cpfFilter, setCpfFilter] = useState<string>('')
-
+    
 
     const [form] = Form.useForm()
     const navigate = useNavigate()
 
-    useEffect(() => {
+    useEffect(() => { 
         const fetchUsers = async () => {
             try {
                 const response = await api.get<User[]>('/users')
@@ -50,7 +50,7 @@ const UserTable = () => {
         try {
             const response = await api.put<User>(`http://localhost:4000/users/${selectedUser.id}`, values)
             console.log(response.data)
-            setUsers(users.map(user => (user.id === selectedUser.id ? response.data : user)))
+            setUsers(users.map(user => (user.id === selectedUser.id ? response.data: user)))
             setModalVisible(false)
             navigate('/')
             message.success("Usuário atualizado com sucesso")
@@ -59,11 +59,11 @@ const UserTable = () => {
             message.error('Erro ao atualizar usuário')
         }
     }
-
+     
     const handleDelete = async (id: number) => {
         try {
             const response = await api.delete(`users/${id}`)
-            console.log(response)
+            console.log(response)   
             setUsers(users.filter(user => user.id !== id))
             message.success("Usuário deletado com sucesso")
         } catch (error) {
@@ -84,13 +84,12 @@ const UserTable = () => {
 
     const filteredUsers = users.filter(user => {
 
-        const nomeLowerCase = user.nome ? user.nome.toLowerCase() : '';
+    const nomeLowerCase = user.nome ? user.nome.toLowerCase() : '';
 
+    const cpfIncludes = user.cpf ? user.cpf.includes(cpfFilter) : false;
 
-        const cpfIncludes = user.cpf ? user.cpf.includes(cpfFilter) : false;
-
-        return nomeLowerCase.includes(nameFilter.toLowerCase()) && cpfIncludes;
-    });
+    return nomeLowerCase.includes(nameFilter.toLowerCase()) && cpfIncludes;
+});
     const columns: TableProps<User>['columns'] = [
         {
             title: 'ID',
@@ -100,28 +99,28 @@ const UserTable = () => {
         {
             title: 'Nome',
             dataIndex: 'nome',
-            key: 'nome'
+            key:'nome'
         },
         {
             title: "CPF",
             dataIndex: 'cpf',
-            key: 'cpf'
+            key:'cpf'
         },
         {
             title: "RG",
             dataIndex: 'rg',
-            key: 'rg'
+            key:'rg'
         },
         {
             title: "Data de Nascimento",
             dataIndex: 'data_nasc',
-            key: 'data_nasc',
+            key:'data_nasc',
             render: (date) => {
                 const formattedDate = new Date(date)
                 const day = formattedDate.getDate();
                 const month = formattedDate.getMonth() + 1;
                 const year = formattedDate.getFullYear();
-
+      
                 return `${day.toString().padStart(2, '0')}/${month.toString().padStart(2, '0')}/${year}`
             }
 
@@ -129,12 +128,12 @@ const UserTable = () => {
         {
             title: "Sexo",
             dataIndex: 'sexo',
-            key: 'sexo'
+            key:'sexo'
         },
         {
             title: 'Ações',
             key: 'ações',
-            render: (_, record) => (
+            render : (_, record) => (
                 <Space size="middle">
                     <Button type='primary' onClick={() => handleEdit(record)}>
                         Editar
@@ -150,7 +149,7 @@ const UserTable = () => {
 
     return (
         <>
-            <Space style={{ marginBottom: 16, display: 'flex', justifyContent: 'center', marginTop: 25 }}>
+            <Space style={{ marginBottom: 16, display: 'flex', justifyContent: 'center', marginTop: 25}}>
                 <Input
                     placeholder="Filtrar por nome"
                     value={nameFilter}
@@ -165,40 +164,40 @@ const UserTable = () => {
             <Button type="primary">
                 <Link to='/create'>Novo Usuário</Link>
             </Button>
-            <Table dataSource={filteredUsers} columns={columns} />
+            <Table dataSource={filteredUsers} columns={columns}/>
             <Modal
                 title="Editar Usuário"
                 open={modalVisible}
                 onCancel={() => setModalVisible(false)}
                 onOk={form.submit}
-            >
-                <Form
-                    form={form}
-                    onFinish={handleFinishUpdate}
-                >
-                    <Form.Item name="nome" label="Nome">
-                        <Input />
-                    </Form.Item>
-                    <Form.Item name="cpf" label="CPF">
-                        <Input />
-                    </Form.Item>
-                    <Form.Item name="rg" label="RG">
-                        <Input />
-                    </Form.Item>
-                    <Form.Item name="data_nasc" label="Data de Nascimento">
-                        <DatePicker style={{ width: '100%' }} />
-                    </Form.Item>
-                    <Form.Item name="sexo" label="Sexo">
-                        <Select
-                            options={[
-                                { value: 'Masculino', label: 'Masculino' },
-                                { value: 'Feminino', label: 'Feminino' },
-                                { value: 'Outros', label: 'Outros' }
-                            ]}
+      >
+        <Form
+          form={form}
+          onFinish={handleFinishUpdate}
+        >
+          <Form.Item name="nome" label="Nome">
+                <Input />
+            </Form.Item>
+            <Form.Item name="cpf" label="CPF">
+                <Input />
+            </Form.Item>
+            <Form.Item name="rg" label="RG">
+                <Input />
+            </Form.Item>
+            <Form.Item name="data_nasc" label="Data de Nascimento">
+                <DatePicker style={{ width: '100%' }}/>
+            </Form.Item>
+            <Form.Item name="sexo" label="Sexo">
+                <Select 
+                options={[
+                    { value: 'Masculino', label: 'Masculino'},
+                    { value: 'Feminino', label: 'Feminino'},
+                    { value: 'Outros', label: 'Outros'}
+                ]}
                         />
-                    </Form.Item>
-                </Form>
-            </Modal>
+            </Form.Item>
+        </Form>
+      </Modal>
         </>
     )
 }

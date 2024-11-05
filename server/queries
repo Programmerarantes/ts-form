@@ -37,6 +37,8 @@ const { error } = userSchema.validate(req.body);
 //testando winston para registrar erros internos
 
 const winston = require('winston')
+const pool = require('./src/db/db')
+require('dotenv').config()
 
 const logger = winston.createLogger({
   level: 'error',
@@ -45,17 +47,6 @@ const logger = winston.createLogger({
     new winston.transports.File({ filename: 'error.log', level: 'error' }),
     new winston.transports.Console(),
   ],
-})
-const Pool = require('pg').Pool
-
-//criar um dotenv?
-
-const pool = new Pool({
-  host: 'localhost',
-  user: 'postgres',
-  password: 'matheus123',
-  database: 'postgres',
-  port: 5432,
 })
 
 const getUsers = (_, res) => {
@@ -95,7 +86,7 @@ const updateUser = (req, res) => {
   pool.query(q, [nome, cpf, rg, data_nasc, sexo, req.params.id], (err, data) => {
     console.log("Erro ao atualizar usuário: ", err)
     if (err) return res.status(500).json(err)
-
+    logger.error(`Erro ao atualizar usuário: ${err.message}`)
     return res.status(200).json(data.rows)
   })
 };
@@ -105,7 +96,7 @@ const deleteUser = (req, res) => {
 
   pool.query(q, [req.params.id], (err) => {
     if (err) return res.status(500).json(err)
-
+    logger.error(`Erro ao deletar usuário: ${err.message}`)
     return res.status(200).json({})
   })
 }

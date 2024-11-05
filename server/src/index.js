@@ -1,9 +1,9 @@
 const express = require('express')
 const bodyParser = require('body-parser')
 const app = express()
-const db = require('./queries')
 const port = 4000
 const cors = require('cors')
+const userController = require('./controllers/userController')
 
 app.use(cors())
 app.use(bodyParser.json())
@@ -17,11 +17,11 @@ app.get('/', (req, res)=> {
     res.json({info: 'Node, Express, Postgres API'})
 }) 
 
-app.get('/users', db.getUsers)
-app.post('/users', db.createUser)
-app.put('/users/:id', db.updateUser)
-app.delete('/users/:id', db.deleteUser)
-app.get("/count", db.countUsers);
+app.get('/users', userController.getUsersHandler)
+app.post('/users', userController.createUserHandler)
+app.put('/users/:id', userController.updateUserHandler)
+app.delete('/users/:id', userController.deleteUserHandler)
+app.get("/count", userController.countUsersHandler);
 
 app.listen(port, () => {
     console.log(`App running on: http://localhost:${port}`)
