@@ -22,6 +22,7 @@ Este repositório contém uma aplicação fullstack de gerenciamento de usuário
 - **Axios** para requisições HTTP
 - **Vite** como bundler
 
+
 ### server
 - **Node.js** + **Express**
 - **PostgreSQL** para armazenamento de dados
@@ -29,22 +30,6 @@ Este repositório contém uma aplicação fullstack de gerenciamento de usuário
 - **Docker** para ambiente de desenvolvimento (opcional)
 
 ---
-
-## 📦 Estrutura do Projeto
-
-```plaintext
-📂 projeto-fullstack
-├── 📁 client      # Código do frontend
-│   ├── public       # Arquivos públicos
-│   ├── src          # Código-fonte React
-│   └── ...
-├── 📁 server       # Código do backend
-│   ├── controllers  # Lógica das rotas e handlers
-│   ├── db           # Configuração de banco de dados
-│   ├── queries      # Funções de consulta ao banco de dados
-│   └── tests        # Testes unitários
-└── README.md        # Documentação
-
 ## 🛠️ Pré-requisitos
 
 Certifique-se de ter instalado:
@@ -116,3 +101,20 @@ GET /users: Retorna a lista de usuários.
 POST /users: Cria um novo usuário.
 PUT /users/:id: Atualiza um usuário existente.
 DELETE /users/:id: Deleta um usuário existente.
+
+
+## 📦 Estrutura do Projeto
+
+```plaintext
+📂 ts-form
+├── 📁 client      # Código do frontend
+│   ├── public       # Arquivos públicos
+│   ├── src          # Código-fonte React
+│   └── ...
+├── 📁 server       # Código do backend
+│   ├── controllers  # Lógica das rotas e handlers
+│   ├── db           # Configuração de banco de dados
+│   ├── queries      # Funções de consulta ao banco de dados
+│   └── tests        # Testes unitários
+└── README.md        # Documentação
+
